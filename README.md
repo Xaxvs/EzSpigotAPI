@@ -2,7 +2,7 @@
 
 ## I plan to overhaul this utility soon as it is very messy, old, probable memory leaks, probably isn't safe in general, and probably has bugs...
 
-![GeneralSpigotHelper](https://jitpack.io/v/Fotohh/GeneralSpigotHelper.svg)
+[![](https://jitpack.io/v/Xaxvs/EzSpigotAPI.svg)](https://jitpack.io/#Xaxvs/EzSpigotAPI)
 
 ## Overview
 
