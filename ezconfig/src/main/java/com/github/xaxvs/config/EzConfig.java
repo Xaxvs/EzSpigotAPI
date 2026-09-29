@@ -31,7 +31,9 @@ public class EzConfig {
     }
 
     public List<ValidationResult> initialize(boolean saveAtomically) throws IOException {
-        if (configMessageManager.initializeMessages() || configSettingManager.initializeValues()) {
+        boolean setting = configSettingManager.initializeValues();
+        boolean message = configMessageManager.initializeMessages();
+        if (setting || message) {
             shouldSave = true;
         }
         List<ValidationResult> results = configValidator.validateConfig();
