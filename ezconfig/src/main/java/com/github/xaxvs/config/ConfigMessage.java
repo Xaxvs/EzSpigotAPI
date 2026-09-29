@@ -7,23 +7,19 @@ import org.jspecify.annotations.NullMarked;
 import java.util.Map;
 
 @NullMarked
-public class ConfigMessage {
-
-    private final String path;
-    private final String message;
+public class ConfigMessage extends ConfigValue<String> {
 
     ConfigMessage(String path, String message) {
-        this.path = path;
-        this.message = message;
+        super(path, message);
     }
 
     public ConfigMessage colorize() {
-        return new ConfigMessage(path, ChatColor.translateAlternateColorCodes('&', message));
+        return new ConfigMessage(path, ChatColor.translateAlternateColorCodes('&', value));
     }
 
     public ConfigMessage replace(Map<Placeholders, String> placeholders) {
         var values = Map.copyOf(placeholders);
-        String replacedMessage = message;
+        String replacedMessage = value;
         for (var entry : values.entrySet()) {
             replacedMessage = replacedMessage.replace(
                     entry.getKey().getPlaceholder(),
@@ -31,14 +27,6 @@ public class ConfigMessage {
             );
         }
         return new ConfigMessage(path, replacedMessage);
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public String getMessage() {
-        return message;
     }
 
 }

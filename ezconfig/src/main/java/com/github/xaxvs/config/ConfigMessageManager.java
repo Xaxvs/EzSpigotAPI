@@ -25,7 +25,7 @@ public class ConfigMessageManager {
 
     private boolean setMessage(ConfigMessage configMessage) {
         if (!configuration.isSet(configMessage.getPath())) {
-            configuration.set(configMessage.getPath(), configMessage.getMessage());
+            configuration.set(configMessage.getPath(), configMessage.getValue());
             return true;
         }
         return false;

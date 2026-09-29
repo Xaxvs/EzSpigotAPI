@@ -13,13 +13,16 @@ public class EzConfig {
     private final ConfigFile configFile;
     private final ConfigValidator configValidator;
     private final ConfigMessageManager configMessageManager;
+    private final ConfigSettingManager configSettingManager;
     private final FileConfiguration configuration;
+    private boolean shouldSave = false;
 
     public EzConfig(@NonNull ConfigFile configFile, ConfigRule... rules) {
         this.configFile = configFile;
         this.configuration = configFile.getConfiguration();
         this.configValidator = new ConfigValidator(configuration, rules);
         this.configMessageManager = new ConfigMessageManager(configuration);
+        this.configSettingManager = new ConfigSettingManager(configuration);
 
     }
 
@@ -27,21 +30,23 @@ public class EzConfig {
         return configuration;
     }
 
-    private boolean shouldSave = false;
-
     public List<ValidationResult> initialize(boolean saveAtomically) throws IOException {
-        if(configMessageManager.initializeMessages()) {
+        if (configMessageManager.initializeMessages() || configSettingManager.initializeValues()) {
             shouldSave = true;
         }
         List<ValidationResult> results = configValidator.validateConfig();
-        if(results.stream().anyMatch(validationResult -> !validationResult.isResultValid())) {
+        if (results.stream().anyMatch(validationResult -> !validationResult.isResultValid())) {
             return results;
         }
-        if(shouldSave) {
+        if (shouldSave) {
             configFile.saveConfig(saveAtomically);
             shouldSave = false;
         }
         return results;
+    }
+
+    public ConfigSettingManager getConfigSettingManager() {
+        return configSettingManager;
     }
 
     public ConfigValidator getConfigValidator() {
