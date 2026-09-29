@@ -45,14 +45,17 @@ public class ConfigValidator {
         rules.add(configRule);
         return configRule;
     }
-    //                                             interface ValidationRule
-    //                                             Bound implements interface
-    // ConfigRule addRule(EntryType.LONG, "some.path", new Bound(250000, 529999));
 
     private boolean checkType(String path, ValidationType type) {
         return switch (type) {
             case STRING -> configuration.isString(path);
-            case LONG -> configuration.isLong(path);
+            case LONG -> {
+                Object value = configuration.get(path);
+                yield value instanceof Byte
+                        || value instanceof Short
+                        || value instanceof Integer
+                        || value instanceof Long;
+            }
             case INT -> configuration.isInt(path);
             case DOUBLE -> configuration.isDouble(path);
             case BOOLEAN -> configuration.isBoolean(path);

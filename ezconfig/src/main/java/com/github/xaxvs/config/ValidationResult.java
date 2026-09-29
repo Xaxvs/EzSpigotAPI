@@ -7,9 +7,9 @@ import org.jspecify.annotations.NullMarked;
 public class ValidationResult {
 
     private final String path;
-    private Result pathIsSet = Result.VALID;
-    private Result isTypeValid = Result.VALID;
-    private Result isRuleValid = Result.VALID;
+    private Result pathResult = Result.VALID;
+    private Result validTypeResult = Result.VALID;
+    private Result validRuleResult = Result.VALID;
 
     ValidationResult(String path) {
         this.path = path;
@@ -20,36 +20,36 @@ public class ValidationResult {
     }
 
     void pathNotSet() {
-        pathIsSet = Result.INVALID;
-        isTypeValid = Result.SKIPPED;
-        isRuleValid = Result.SKIPPED;
+        pathResult = Result.INVALID;
+        validTypeResult = Result.SKIPPED;
+        validRuleResult = Result.SKIPPED;
     }
 
     public boolean isResultValid() {
-        return pathIsSet == Result.VALID
-                && isRuleValid == Result.VALID
-                && isTypeValid == Result.VALID;
+        return pathResult == Result.VALID
+                && validRuleResult == Result.VALID
+                && validTypeResult == Result.VALID;
     }
 
-    public Result isPathSet() {
-        return pathIsSet;
+    public Result getPathResult() {
+        return pathResult;
     }
 
-    public Result isRuleValid() {
-        return isRuleValid;
+    public Result getRuleResult() {
+        return validRuleResult;
     }
 
     void ruleNotValid() {
-        isRuleValid = Result.INVALID;
+        validRuleResult = Result.INVALID;
     }
 
-    public Result isTypeValid() {
-        return isTypeValid;
+    public Result getTypeResult() {
+        return validTypeResult;
     }
 
     void typeNotValid() {
-        isTypeValid = Result.INVALID;
-        isRuleValid = Result.SKIPPED;
+        validTypeResult = Result.INVALID;
+        validRuleResult = Result.SKIPPED;
     }
 
 }

@@ -2,7 +2,6 @@ package com.github.xaxvs.config;
 
 import com.github.xaxvs.file.ConfigFile;
 import com.github.xaxvs.validation.ConfigRule;
-import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.jspecify.annotations.NonNull;
 
@@ -28,8 +27,9 @@ public class EzConfig {
         return configuration;
     }
 
+    private boolean shouldSave = false;
+
     public List<ValidationResult> initialize(boolean saveAtomically) throws IOException {
-        boolean shouldSave = false;
         if(configMessageManager.initializeMessages()) {
             shouldSave = true;
         }
@@ -39,6 +39,7 @@ public class EzConfig {
         }
         if(shouldSave) {
             configFile.saveConfig(saveAtomically);
+            shouldSave = false;
         }
         return results;
     }
