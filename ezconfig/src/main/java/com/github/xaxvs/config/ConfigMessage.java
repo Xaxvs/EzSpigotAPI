@@ -1,5 +1,6 @@
-package com.github.xaxvs.message;
+package com.github.xaxvs.config;
 
+import com.github.xaxvs.placeholders.Placeholders;
 import org.bukkit.ChatColor;
 import org.jspecify.annotations.NullMarked;
 
@@ -32,11 +33,11 @@ public class ConfigMessage {
         return new ConfigMessage(path, replacedMessage);
     }
 
-    String getPath() {
+    public String getPath() {
         return path;
     }
 
-    String getMessage() {
+    public String getMessage() {
         return message;
     }
 
