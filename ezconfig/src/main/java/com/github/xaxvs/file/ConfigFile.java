@@ -16,11 +16,7 @@ public class ConfigFile {
     private final YamlConfiguration configuration = new YamlConfiguration();
 
     public ConfigFile(Path folder, String fileName) throws IOException {
-        this(folder.resolve(fileName));
-    }
-
-    public ConfigFile(Path file) throws IOException {
-        this.file = file;
+        file = folder.resolve(fileName);
         resolveDirs();
         resolveFile();
     }

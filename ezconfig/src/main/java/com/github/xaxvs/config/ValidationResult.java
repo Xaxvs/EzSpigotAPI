@@ -5,15 +5,25 @@ import org.jspecify.annotations.NullMarked;
 @NullMarked
 public class ValidationResult {
 
-    private boolean pathIsSet;
-    private boolean isTypeValid;
-    private boolean isRuleValid;
+    private boolean pathIsSet = true;
+    private boolean isTypeValid = true;
+    private boolean isRuleValid = true;
+    private final String path;
 
-    ValidationResult() {
+    ValidationResult(String path) {
+        this.path = path;
     }
 
-    void setPathIsSet(boolean pathIsSet) {
-        this.pathIsSet = pathIsSet;
+    public String getPath() {
+        return path;
+    }
+
+    void pathNotSet() {
+        pathIsSet = false;
+    }
+
+    public boolean isResultValid() {
+        return pathIsSet && isRuleValid && isTypeValid;
     }
 
     public boolean isPathSet() {
@@ -24,15 +34,16 @@ public class ValidationResult {
         return isRuleValid;
     }
 
-    void setRuleValid(boolean ruleValid) {
-        this.isRuleValid = ruleValid;
+    void ruleNotValid() {
+        isRuleValid = false;
     }
 
     public boolean isTypeValid() {
         return isTypeValid;
     }
 
-    void setTypeValid(boolean typeValid) {
-        this.isTypeValid = typeValid;
+    void typeNotValid() {
+        isTypeValid = false;
     }
+
 }

@@ -22,11 +22,20 @@ public class ConfigValidator {
     public List<ValidationResult> validateConfig() {
         List<ValidationResult> results = new ArrayList<>();
         for (ConfigRule rule : rules) {
-            ValidationResult result = new ValidationResult();
-            result.setPathIsSet(configuration.isSet(rule.path()));
-            result.setRuleValid(rule.validation().isValid(configuration.get(rule.path())));
-            result.setTypeValid(checkType(rule.path(), rule.type()));
+            String path = rule.path();
+            ValidationResult result = new ValidationResult(path);
             results.add(result);
+            if(!configuration.isSet(path)) {
+                result.pathNotSet();
+                continue;
+            }
+            if(!checkType(path, rule.type())) {
+                result.typeNotValid();
+                continue;
+            }
+            if(!rule.validation().isValid(configuration.get(path))) {
+                result.ruleNotValid();
+            }
         }
         return results.stream().toList();
     }
