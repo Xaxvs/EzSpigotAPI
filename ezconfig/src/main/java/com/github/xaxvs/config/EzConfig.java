@@ -16,9 +16,9 @@ public class EzConfig {
     private final ConfigMessageManager configMessageManager;
     private final FileConfiguration configuration;
 
-    public EzConfig(@NonNull ConfigFile configFile, ConfigRule... rules) throws IOException, InvalidConfigurationException {
+    public EzConfig(@NonNull ConfigFile configFile, ConfigRule... rules) {
         this.configFile = configFile;
-        this.configuration = configFile.toConfiguration();
+        this.configuration = configFile.getConfiguration();
         this.configValidator = new ConfigValidator(configuration, rules);
         this.configMessageManager = new ConfigMessageManager(configuration);
 
@@ -29,10 +29,18 @@ public class EzConfig {
     }
 
     public List<ValidationResult> initialize(boolean saveAtomically) throws IOException {
+        boolean shouldSave = false;
         if(configMessageManager.initializeMessages()) {
+            shouldSave = true;
+        }
+        List<ValidationResult> results = configValidator.validateConfig();
+        if(results.stream().anyMatch(validationResult -> !validationResult.isResultValid())) {
+            return results;
+        }
+        if(shouldSave) {
             configFile.saveConfig(saveAtomically);
         }
-        return configValidator.validateConfig();
+        return results;
     }
 
     public ConfigValidator getConfigValidator() {
