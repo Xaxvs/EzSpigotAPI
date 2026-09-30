@@ -24,25 +24,24 @@ public class ConfigValidator {
         for (ConfigRule rule : rules) {
             String path = rule.path();
             ValidationResult result = new ValidationResult(path);
-            List<String> errs = new ArrayList<>();
             results.add(result);
             if (!configuration.isSet(path)) {
                 result.pathNotSet();
-                errs.add(path + " is not set");
+                result.addError(path + " is not set");
                 continue;
             }
             if (!checkType(path, rule.type())) {
                 result.typeNotValid();
-                errs.add("Expected type: " + rule.type().name() + ". Got a different type");
+                result.addError("Expected type: " + rule.type().name() + ". Got a different type");
                 continue;
             }
 
             Arrays.stream(rule.validation()).forEach(validationRule -> {
                 if (!validationRule.isValid(configuration.get(path))) {
-                    errs.add(validationRule.getErrReason());
+                    result.ruleNotValid();
+                    result.addError(validationRule.getErrReason());
                 }
             });
-            result.ruleNotValid(errs);
 
         }
         return results.stream().toList();

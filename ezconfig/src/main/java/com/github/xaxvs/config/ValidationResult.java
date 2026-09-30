@@ -23,6 +23,10 @@ public class ValidationResult {
         return path;
     }
 
+    void addError(String err) {
+        errs.add(err);
+    }
+
     void pathNotSet() {
         pathResult = Result.INVALID;
         validTypeResult = Result.SKIPPED;
@@ -30,7 +34,7 @@ public class ValidationResult {
     }
 
     public List<String> getErrs() {
-        return errs;
+        return errs.stream().toList();
     }
 
     public boolean isResultValid() {
@@ -47,9 +51,8 @@ public class ValidationResult {
         return validRuleResult;
     }
 
-    void ruleNotValid(List<String> errs) {
+    void ruleNotValid() {
         validRuleResult = Result.INVALID;
-        this.errs = errs;
     }
 
     public Result getTypeResult() {

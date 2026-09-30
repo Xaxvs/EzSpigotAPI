@@ -45,7 +45,7 @@ public class Bound<N extends Number> implements ValidationRule {
 
     @Override
     public String getErrReason() {
-        return "Expected number to be between (inclusive) " + lower + " and " + upper ;
+        return "Must be greater than or equal to " + lower + " and lower than " + upper ;
     }
 
     private static BigDecimal toDecimal(Number number) {
