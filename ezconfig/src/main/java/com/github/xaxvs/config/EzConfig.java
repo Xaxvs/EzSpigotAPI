@@ -4,7 +4,6 @@ import com.github.xaxvs.file.ConfigFile;
 import com.github.xaxvs.validation.ConfigRule;
 import com.github.xaxvs.validation.ValidationRule;
 import com.github.xaxvs.validation.ValidationType;
-import com.github.xaxvs.validation.rule.ValidString;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.jspecify.annotations.NullMarked;
 
@@ -52,10 +51,7 @@ public class EzConfig {
 
     public ConfigMessage addMessage(String path, String defaultMessage, ValidationRule... rule) {
         ConfigMessage message = configMessageManager.addMessage(path, defaultMessage);
-        configValidator.addRule(ValidationType.STRING, path, new ValidString());
-        if (rule.length > 0) {
-            configValidator.addRule(ValidationType.STRING, path, rule);
-        }
+        configValidator.addRule(ValidationType.STRING, path, rule);
         return message;
     }
 
