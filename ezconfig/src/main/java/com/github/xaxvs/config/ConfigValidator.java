@@ -23,29 +23,41 @@ public class ConfigValidator {
 
     public List<ValidationResult> validateConfig() {
         List<ValidationResult> results = new ArrayList<>();
+
         for (ConfigRule rule : rules) {
             String path = rule.path();
             ValidationResult result = new ValidationResult(path);
             results.add(result);
+
             if (!configuration.isSet(path)) {
                 result.pathNotSet();
                 result.addError(path + " is not set");
                 continue;
             }
+
             if (!checkType(path, rule.type())) {
                 result.typeNotValid();
-                result.addError("Expected type: " + rule.type().name() + ". Got a different type");
+                result.addError(
+                        "Expected type: " + rule.type().name() + ". Got a different type"
+                );
                 continue;
             }
 
-            Arrays.stream(rule.validation()).forEach(validationRule -> {
-                if (!validationRule.isValid(configuration.get(path))) {
-                    result.ruleNotValid();
-                    result.addError(validationRule.getErrReason());
-                }
-            });
+            Object value = configuration.get(path);
 
+            for (ValidationRule validationRule : rule.validation()) {
+                List<String> errors = validationRule.validate(path, value);
+
+                if (!errors.isEmpty()) {
+                    result.ruleNotValid();
+
+                    for (String error : errors) {
+                        result.addError(error);
+                    }
+                }
+            }
         }
+
         return results.stream().toList();
     }
 
@@ -70,5 +82,4 @@ public class ConfigValidator {
             case LIST -> configuration.isList(path);
         };
     }
-
 }
