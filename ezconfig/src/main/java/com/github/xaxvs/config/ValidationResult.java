@@ -13,7 +13,7 @@ public class ValidationResult {
     private Result pathResult = Result.VALID;
     private Result validTypeResult = Result.VALID;
     private Result validRuleResult = Result.VALID;
-    private List<String> errs = new ArrayList<>();
+    private final List<String> errs = new ArrayList<>();
 
     ValidationResult(String path) {
         this.path = path;

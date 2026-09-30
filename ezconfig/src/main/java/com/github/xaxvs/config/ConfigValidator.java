@@ -4,11 +4,13 @@ import com.github.xaxvs.validation.ConfigRule;
 import com.github.xaxvs.validation.ValidationRule;
 import com.github.xaxvs.validation.ValidationType;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@NullMarked
 public class ConfigValidator {
 
     private final FileConfiguration configuration;
@@ -47,16 +49,9 @@ public class ConfigValidator {
         return results.stream().toList();
     }
 
-    public ConfigRule addRule(ValidationType type, String path, ValidationRule rule) {
-        ConfigRule configRule = new ConfigRule(type, path, rule);
-        rules.add(configRule);
-        return configRule;
-    }
-
-    public ConfigRule addRules(ValidationType type, String path, ValidationRule... validationRules) {
+    void addRule(ValidationType type, String path, ValidationRule... validationRules) {
         ConfigRule configRule = new ConfigRule(type, path, validationRules);
         rules.add(configRule);
-        return configRule;
     }
 
     private boolean checkType(String path, ValidationType type) {

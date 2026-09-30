@@ -35,7 +35,7 @@ public class ConfigMessageManager {
         return messages.stream().toList();
     }
 
-    public ConfigMessage addMessage(@NonNull String path, @NonNull String message) {
+    ConfigMessage addMessage(@NonNull String path, @NonNull String message) {
         String msg = configuration.getString(path, message);
         ConfigMessage configMessage = new ConfigMessage(path, msg);
         messages.add(configMessage);
