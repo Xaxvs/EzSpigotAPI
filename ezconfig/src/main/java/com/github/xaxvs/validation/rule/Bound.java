@@ -10,6 +10,7 @@ public class Bound<N extends Number> implements ValidationRule {
     private final BigDecimal upper;
     private final BigDecimal lower;
 
+
     /**
      * Creates a range where {@code lower <= value < upper}.
      * Arguments retain the order (upper, lower).
@@ -40,6 +41,11 @@ public class Bound<N extends Number> implements ValidationRule {
         } catch (NumberFormatException e) {
             return false;
         }
+    }
+
+    @Override
+    public String getErrReason() {
+        return "Expected number to be between (inclusive) " + lower + " and " + upper ;
     }
 
     private static BigDecimal toDecimal(Number number) {

@@ -3,6 +3,9 @@ package com.github.xaxvs.config;
 import com.github.xaxvs.validation.Result;
 import org.jspecify.annotations.NullMarked;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @NullMarked
 public class ValidationResult {
 
@@ -10,6 +13,7 @@ public class ValidationResult {
     private Result pathResult = Result.VALID;
     private Result validTypeResult = Result.VALID;
     private Result validRuleResult = Result.VALID;
+    private List<String> errs = new ArrayList<>();
 
     ValidationResult(String path) {
         this.path = path;
@@ -23,6 +27,10 @@ public class ValidationResult {
         pathResult = Result.INVALID;
         validTypeResult = Result.SKIPPED;
         validRuleResult = Result.SKIPPED;
+    }
+
+    public List<String> getErrs() {
+        return errs;
     }
 
     public boolean isResultValid() {
@@ -39,8 +47,9 @@ public class ValidationResult {
         return validRuleResult;
     }
 
-    void ruleNotValid() {
+    void ruleNotValid(List<String> errs) {
         validRuleResult = Result.INVALID;
+        this.errs = errs;
     }
 
     public Result getTypeResult() {

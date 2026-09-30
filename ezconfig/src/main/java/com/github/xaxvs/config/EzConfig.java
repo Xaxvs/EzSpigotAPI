@@ -2,12 +2,16 @@ package com.github.xaxvs.config;
 
 import com.github.xaxvs.file.ConfigFile;
 import com.github.xaxvs.validation.ConfigRule;
+import com.github.xaxvs.validation.ValidationRule;
+import com.github.xaxvs.validation.ValidationType;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 import java.io.IOException;
 import java.util.List;
 
+@NullMarked
 public class EzConfig {
 
     private final ConfigFile configFile;
@@ -17,7 +21,7 @@ public class EzConfig {
     private final FileConfiguration configuration;
     private boolean shouldSave = false;
 
-    public EzConfig(@NonNull ConfigFile configFile, ConfigRule... rules) {
+    public EzConfig(ConfigFile configFile, ConfigRule... rules) {
         this.configFile = configFile;
         this.configuration = configFile.getConfiguration();
         this.configValidator = new ConfigValidator(configuration, rules);
@@ -47,6 +51,14 @@ public class EzConfig {
         return results;
     }
 
+    public ConfigMessage addMessage(String path, String defaultMessage, @Nullable ValidationRule... rule) {
+        ConfigMessage message = configMessageManager.addMessage(path, defaultMessage);
+        if (rule.length > 0) {
+            configValidator.addRules(ValidationType.STRING, path, rule);
+        }
+        return message;
+    }
+
     public ConfigSettingManager getConfigSettingManager() {
         return configSettingManager;
     }
@@ -58,4 +70,5 @@ public class EzConfig {
     public ConfigMessageManager getConfigMessageManager() {
         return configMessageManager;
     }
+
 }
