@@ -2,8 +2,7 @@
 
 ## Currently Under Construction...
 
-<!-- [![badge](https://jitpack.io/v/Fotohh/GeneralSpigotHelper.svg)](https://jitpack.io/#Fotohh/GeneralSpigotHelper) -->
-
+<!-- [![jitpack](https://jitpack.io/v/Xaxvs/EzSpigotAPI.svg)](https://jitpack.io/#Xaxvs/EzSpigotAPI) -->
 ## License
 
 This library is licensed under the [MIT License](LICENSE).
