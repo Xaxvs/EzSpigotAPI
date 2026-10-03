@@ -37,13 +37,6 @@ public class ConfigSettingManager {
         return values.stream().toList();
     }
 
-    public ConfigValue<Object> addValue(String path, Object value) {
-        Object val = configuration.get(path, value);
-        ConfigValue<Object> configSetting = new ConfigValue<>(path, val);
-        values.add(configSetting);
-        return configSetting;
-    }
-
     ConfigValue<String> addString(String path, String value) {
         String val = configuration.getString(path, value);
         ConfigValue<String> configValue = new ConfigValue<>(path, val);
@@ -82,51 +75,6 @@ public class ConfigSettingManager {
     ConfigValue<List<?>> addList(String path, List<?> value) {
         List<?> val = configuration.getList(path, value);
         ConfigValue<List<?>> configValue = new ConfigValue<>(path, val);
-        values.add(configValue);
-        return configValue;
-    }
-
-    public ConfigValue<List<String>> addStringList(String path, List<String> value) {
-        List<String> val = configuration.isList(path)
-                ? configuration.getStringList(path)
-                : value;
-        ConfigValue<List<String>> configValue = new ConfigValue<>(path, val);
-        values.add(configValue);
-        return configValue;
-    }
-
-    public ConfigValue<List<Integer>> addIntList(String path, List<Integer> value) {
-        List<Integer> val = configuration.isList(path)
-                ? configuration.getIntegerList(path)
-                : value;
-        ConfigValue<List<Integer>> configValue = new ConfigValue<>(path, val);
-        values.add(configValue);
-        return configValue;
-    }
-
-    public ConfigValue<List<Long>> addLongList(String path, List<Long> value) {
-        List<Long> val = configuration.isList(path)
-                ? configuration.getLongList(path)
-                : value;
-        ConfigValue<List<Long>> configValue = new ConfigValue<>(path, val);
-        values.add(configValue);
-        return configValue;
-    }
-
-    public ConfigValue<List<Double>> addDoubleList(String path, List<Double> value) {
-        List<Double> val = configuration.isList(path)
-                ? configuration.getDoubleList(path)
-                : value;
-        ConfigValue<List<Double>> configValue = new ConfigValue<>(path, val);
-        values.add(configValue);
-        return configValue;
-    }
-
-    public ConfigValue<List<Boolean>> addBooleanList(String path, List<Boolean> value) {
-        List<Boolean> val = configuration.isList(path)
-                ? configuration.getBooleanList(path)
-                : value;
-        ConfigValue<List<Boolean>> configValue = new ConfigValue<>(path, val);
         values.add(configValue);
         return configValue;
     }
